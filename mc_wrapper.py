@@ -5,6 +5,7 @@ import json
 import sys
 import re
 from nbsr import NonBlockingStreamReader as NBSR
+import config
 
 # run the shell as a subprocess:
 p = Popen(sys.argv[1:],
@@ -60,7 +61,7 @@ def process_message(sentence : str) -> Union[str, None]:
         r"\[[\d:]+\] \[Server thread\/INFO\]: Done \(\d+.?\d*s\)! For help, type \"help\"",
         sentence):
         server_live = True
-        return "The Minecraft server is live. The server is reacable at <code>mc.noordstar.me</code>.", "The minecraft server is live. The server is reacable at <code>mc.noordstar.me</code>."
+        return f"The Minecraft server is live. The server is reacable at <code>{config.SERVER_IP}</code>.", f"The minecraft server is live. The server is reacable at <code>{config.SERVER_IP}</code>."
     
     if re.fullmatch(
         r"\[[\d:]+\] \[Server thread\/INFO\]: Stopping server",

@@ -6,6 +6,7 @@ from nio import AsyncClient, MatrixRoom, RoomMessageText
 import mc_wrapper
  
 import config
+import build_server
 
 STARTUP_TIME = time.time()
 
