@@ -46,6 +46,11 @@ class NonBlockingStreamReader:
             return self._q.get(block = timeout is not None,
                     timeout = timeout)
         except Empty:
-            return None
+            if self._t.is_alive():
+                return None
+            else:
+                raise ProcessHasTerminated
 
 class UnexpectedEndOfStream(Exception): pass
+
+class ProcessHasTerminated(Exception): pass

@@ -10,7 +10,7 @@ from typing import Union
 import asyncio
 import json
 import re
-from src.nbsr import NonBlockingStreamReader as NBSR
+from src.nbsr import NonBlockingStreamReader as NBSR, ProcessHasTerminated
 import src.config as config
 import src.build_server as build
 
@@ -23,6 +23,7 @@ p = Popen(config.RUN_COMMAND,
         stdin = PIPE, stdout = PIPE, stderr = PIPE, shell = False)
 # wrap p.stdout with a NonBlockingStreamReader object:
 nbsr = NBSR(p.stdout)
+err_nbsr = NBSR(p.stderr)
 
 async def start(client, mc_channel):
     """
@@ -32,7 +33,14 @@ async def start(client, mc_channel):
     await asyncio.sleep(3)
     
     while True:
-        output = nbsr.readline(0.1)
+        try:
+            output = nbsr.readline(0.1)
+        except ProcessHasTerminated:
+            print('==================================\nERROR LOGS :')
+
+            while True:
+                output = err_nbsr.readline(0.1)
+                print(output)
         # 0.1 secs to let the shell output the result
         if not output:
             await asyncio.sleep(1)
