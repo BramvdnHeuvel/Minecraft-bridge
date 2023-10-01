@@ -7,6 +7,10 @@ config:
   # To be downloaded at: https://www.minecraft.net/en-us/download/server
   server_jar: server.jar
 
+  # Confirm the Minecraft EULA. https://account.mojang.com/documents/minecraft_eula
+  # Defaults to false, but is required to run the server.
+  # eula: true
+
 # Matrix bridge configurations
 matrix:
   # Homeserver URL
@@ -45,8 +49,6 @@ matrix:
 
 # Settings that directly affect running the Minecraft server.
 minecraft:
-  # Confirm the Minecraft EULA. Defaults to false.
-  # eula: true
 
   # --------------------
   # MINECRAFT SERVER

@@ -2,13 +2,17 @@ from subprocess import Popen, PIPE
 from typing import Union
 import asyncio
 import json
-import sys
 import re
 from nbsr import NonBlockingStreamReader as NBSR
 import config
+import build_server as build
+
+# Write the appropriate files
+build.write_eula()
+build.write_server_properties()
 
 # run the shell as a subprocess:
-p = Popen(sys.argv[1:],
+p = Popen(config.RUN_COMMAND,
         stdin = PIPE, stdout = PIPE, stderr = PIPE, shell = False)
 # wrap p.stdout with a NonBlockingStreamReader object:
 nbsr = NBSR(p.stdout)
