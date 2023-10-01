@@ -39,11 +39,11 @@ matrix:
   # When multiple RegEx strings apply, all are included.
   alternative_platforms:
     Discord:
-      match: "@_?discord_\d+:.+"
+      match: "@_?discord_\\d+:.+"
       text: D
       color: aqua
     WhatsApp:
-      match: "@whatsapp_\d+:.+"
+      match: "@whatsapp_\\d+:.+"
       text: W
       color: green
 

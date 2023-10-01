@@ -38,4 +38,6 @@ services:
             - <your whitelist>:/usr/src/app/whitelist.json
             - <your world folder>:/usr/src/app/world
             - <your server jar file>:/usr/src/app/server.jar
+        ports:
+            - 25565:25565
 ```

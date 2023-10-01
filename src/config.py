@@ -6,7 +6,7 @@ from typing import Any, List, Optional
 import yaml
 
 with open('config.yaml', 'r') as open_file:
-    SETTINGS = yaml.load(open_file)
+    SETTINGS = yaml.load(open_file, Loader=yaml.Loader)
 
 def at(keys : List[str]) -> Optional[Any]:
     """

@@ -28,6 +28,7 @@ async def start(client, mc_channel):
     """
         Start reading from the Minecraft subprocess.
     """
+    # Provide 3 seconds to prepare the server
     await asyncio.sleep(3)
     
     while True:
@@ -81,7 +82,7 @@ def process_message(sentence : str) -> Union[str, None]:
         r"\[[\d:]+\] \[Server thread\/INFO\]: Done \(\d+.?\d*s\)! For help, type \"help\"",
         sentence):
         server_live = True
-        return f"The Minecraft server is live. The server is reacable at <code>{config.SERVER_IP}</code>.", f"The minecraft server is live. The server is reacable at <code>{config.SERVER_IP}</code>."
+        return f"The Minecraft server is live. The server is reachable at <code>{config.SERVER_IP}</code>.", f"The minecraft server is live. The server is reachable at <code>{config.SERVER_IP}</code>."
     
     if re.fullmatch(
         r"\[[\d:]+\] \[Server thread\/INFO\]: Stopping server",

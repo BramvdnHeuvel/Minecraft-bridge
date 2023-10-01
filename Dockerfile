@@ -7,10 +7,6 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# # Prepare MC server
-# COPY server.jar ./
-# RUN java -jar server.jar --nogui
-
 COPY src/ ./src/
 COPY main.py ./
 
