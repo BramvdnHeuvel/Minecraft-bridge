@@ -1,3 +1,7 @@
+# Minecraft-specific
+server.jar
+world/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
