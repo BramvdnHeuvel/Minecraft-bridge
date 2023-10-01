@@ -1,0 +1,172 @@
+# Matrix bridge configurations
+matrix:
+  # Homeserver URL
+  homeserver: https://matrix.example.org/
+
+  # Bridge login credentials
+  username: "@alice:example.org"
+  password: bridge_password
+
+  # Matrix room
+  room_id: "!channel_id:example.org"
+
+  # List of Matrix users that can send commands to the bridge.
+  # When a message starts with a slash, (/) the bridge will interpret it as a
+  # Minecraft command and will put that as a command into the console.
+  mc-admins:
+    - "@bram:matrix.directory"
+    # - "@alice:example.org"
+    # - 
+
+  # When users have bridged from other platforms, you can indicate accordingly.
+  alternative_platforms:
+    Discord:
+      match: "@_?discord_\d+:.+"
+      text: D
+      color: aqua
+    WhatsApp:
+      match: "@whatsapp_\d+:.+"
+      text: W
+      color: green
+
+# Settings that directly affect running the Minecraft server.
+minecraft:
+  # Confirm the Minecraft EULA. Defaults to false.
+  # eula: true
+
+  # --------------------
+  # MINECRAFT SERVER
+
+  # Exposed port. Defaults to 25565
+  server-port: 25565
+
+  # Maximum amount of players welcome on the server at a time.
+  # Defaults to 20.
+  # max-players: 7
+
+  # Whether to enable command blocks. Defaults to false.
+  # enable-command-block: true
+
+  # Controls how close entities need to be before being sent to clients.
+  # Higher values means they'll be rendered from farther away,
+  # potentially causing more lag.
+  # Value must be between 10 and 1000
+  # entity-broadcast-range-percentage: 150
+
+  # Server description
+  # This is the message that is displayed in the server list of the client, 
+  # below the name. It supports color formatting!
+  # Defaults to a Minecraft server.
+  # motd: A Minecraft server
+
+  # --------------------
+  # SECURITY
+
+  # Whether the server appears "online" to clients. Defaults to true.
+  # When set to false, the server appears offline but users can still join.
+  # enable-status: false
+
+  # If the whitelist is reloaded and/or enabled, any online player not on
+  # the whitelist, gets kicked immediately. Defaults to false.
+  # enforce-whitelist: true
+
+  # Hide online players. This effectively hides who's online when looking
+  # at the server's online status. Defaults to false.
+  # hide-online-players: true
+
+  # Server checks connecting players against Minecraft account database.
+  # Set this to false only if the player's server is not connected to the
+  # Internet. Hackers with fake accounts can connect if this is set to false!
+  # If minecraft.net is down or inaccessible, no players can connect if this
+  # is set to true. Setting this variable to off purposely is called "cracking"
+  # a server, and servers that are present with online mode off are called
+  # "cracked" servers, allowing players with unlicensed copies of Minecraft
+  # to join.
+  # Defaults to true.
+  # online-mode: false
+
+  # Sets whether the server sends snoop data regularly
+  # to http://snoop.minecraft.net.
+  # Defaults to true.
+  snooper-enabled: false
+
+  # Enables a whitelist on the server. Defaults to false.
+  # white-list: true
+
+  # --------------------
+  # ANTI ABUSE
+
+  # Allow users to use flight on the server. Defaults to false.
+  # When set to false, players in the air for at least 5 seconds get kicked
+  # allow-flight: true
+
+  # Allow only players with a confirmed Mojang account to join the server.
+  # When set to false, users might have a cracked Minecraft account when joining.
+  # enforce-secure-profile: false
+
+  # If non-zero, players are kicked from the server if they are idle for
+  # more than that many minutes.
+  # Defaults to zero.
+  # player-idle-timeout: 15
+
+  # Enable PvP on the server. Defaults to true.
+  # pvp: false
+
+  # --------------------
+  # WORLD SETTINGS
+
+  # Whether nether portals work. Defaults to true.
+  # allow-nether: false
+
+  # Force players into the "default" gamemode when they (re)join the server.
+  # Defaults to false.
+  # force-gamemode: true
+
+  # Whether structures (such as villages) can be generated. Defaults to true.
+  # generate-structures: false
+
+  # Sets a world seed for the player's world, as in singleplayer.
+  # If omitted, the world generates with a random seed.
+  # level-seed: ''
+
+  # Sets the maximum distance from players that living entities may be located
+  # in order to be updated by the server, measured in chunks in each direction
+  # of the player (radius, not diameter).
+  # Options: 3 - 32. Defaults to 10, which is recommended.
+  # simulation-distance: 5
+
+  # Whether animals can spawn. Defaults to true.
+  # spawn-animals: false
+
+  # Whether monsters can spawn. Defaults to true.
+  # spawn-monsters: false
+
+  # Whether villagers can spawn. Defaults to true.
+  # spawn-npcs: false
+
+  # Determines the side length of the square spawn protection area as 2x+1.
+  # Setting this to 0 disables the spawn protection. A value of 1 protects
+  # a 3×3 square centered on the spawn point. 2 protects 5×5, 3 protects 7×7,
+  # etc. If there are no ops set on the server, the spawn protection is
+  # disabled automatically as well. 
+  # Defaults to 16.
+  # spawn-protection: 9
+
+  # --------------------
+  # GAMEPLAY
+
+  # Set the difficulty of the server. Defaults to easy.
+  # Options: peaceful, easy, medium, hard
+  difficulty: easy
+
+  # Default gamemode. Defaults to survival.
+  # Options: survival, creative, adventure, spectator
+  gamemode: survival
+
+  # Enable hardcore mode. Defaults to false.
+  # If set to true, server difficulty is ignored and set to hard,
+  # and players are set to spectator mode when they die.
+  # hardcore: true
+
+  # Maximum view distance. Defaults to 10.
+  # view-distance: 15
