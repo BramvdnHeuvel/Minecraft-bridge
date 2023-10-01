@@ -11,7 +11,7 @@ import asyncio
 import json
 import re
 from src.nbsr import NonBlockingStreamReader as NBSR
-import config
+import src.config as config
 import src.build_server as build
 
 # Write the appropriate files

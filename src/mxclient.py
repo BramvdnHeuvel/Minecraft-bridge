@@ -5,7 +5,7 @@ import re
 from nio import AsyncClient, MatrixRoom, RoomMessageText
 import src.mc_wrapper as mc_wrapper
 
-import config
+import src.config as config
 
 STARTUP_TIME = time.time()
 
@@ -57,4 +57,5 @@ async def start():
         mc_wrapper.start(client, config.MATRIX_ROOM)
     )
 
-asyncio.run(start())
+if __name__ == '__main__':
+    asyncio.run(start())

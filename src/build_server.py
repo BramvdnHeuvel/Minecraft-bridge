@@ -3,7 +3,7 @@
     correct configuration.
 """
 
-import config
+import src.config as config
 
 def write_eula():
     """
