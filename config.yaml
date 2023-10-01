@@ -1,3 +1,12 @@
+config:
+  # How much memory the Minecraft server is allowed to take up
+  # Number in megabytes. Defaults to 1024. (= 1 GB)
+  ram: 1024
+
+  # File location of the server jar.
+  # To be downloaded at: https://www.minecraft.net/en-us/download/server
+  server_jar: server.jar
+
 # Matrix bridge configurations
 matrix:
   # Homeserver URL
@@ -14,14 +23,16 @@ matrix:
   server_address: unknown ip
 
   # List of Matrix users that can send commands to the bridge.
-  # When a message starts with a slash, (/) the bridge will interpret it as a
-  # Minecraft command and will put that as a command into the console.
+  # When a message starts with an exclamation mark, (!) the bridge will
+  # interpret it as a Minecraft command and will put that as a command
+  # into the console.
   mc-admins:
     - "@bram:matrix.directory"
     # - "@alice:example.org"
     # - 
 
   # When users have bridged from other platforms, you can indicate accordingly.
+  # When multiple RegEx strings apply, all are included.
   alternative_platforms:
     Discord:
       match: "@_?discord_\d+:.+"

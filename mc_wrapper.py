@@ -14,6 +14,9 @@ p = Popen(sys.argv[1:],
 nbsr = NBSR(p.stdout)
 
 async def start(client, mc_channel):
+    """
+        Start reading from the Minecraft subprocess.
+    """
     await asyncio.sleep(3)
     
     while True:
@@ -49,6 +52,12 @@ async def start(client, mc_channel):
 server_live = False
 
 def process_message(sentence : str) -> Union[str, None]:
+    """
+        Process a message that is sent to stdout in the Minecraft terminal.
+
+        If this function deems it relevant, it returns a string that can be
+        sent to Matrix.
+    """
     global server_live
 
     if (match := re.fullmatch(
@@ -83,7 +92,8 @@ def process_message(sentence : str) -> Union[str, None]:
         sentence)):
         username, = match.groups()
         return username + " left the Minecraft server", (
-            "<strong>" + username + " left the Minecraft server</strong>")
+            "<strong>" + username + " left the Minecraft server</strong>"
+        )
     
     if (match := re.fullmatch(
         r"\[[\d:]+\] \[Server thread\/INFO\]: <([A-Za-z0-9_]{3,16})> (.+)", 
@@ -101,24 +111,39 @@ def process_message(sentence : str) -> Union[str, None]:
 
     return None, None    
 
-def reply_to_mc(message : str, author : str, 
-                admin : bool = False, platform : str = 'Matrix'):
+def reply_to_mc(message : str, display_name : str, sender : str):
     """
         Send something back to the Minecraft terminal.
     """
-    if admin and message.startswith('!'):
+    if sender in config.MATRIX_ADMINS and message.startswith('!'):
         p.stdin.write((message[1:] + "\r\n").encode())
     else:
-        msg = [
-            "",
-            dict(text="M", color="red"),
-            dict(text="D", color="aqua") if platform == 'Discord' else None,
-            dict(text=f" <{author}> {message}")
-        ]
         p.stdin.write(
-            ("execute as @a run tellraw @s " + json.dumps([m for m in msg if m is not None]) + "\r\n").encode()
+            ("execute as @a run tellraw @s " + format(sender, display_name, message) + "\r\n").encode()
         )
     p.stdin.flush()
+
+def format(sender : str, display_name : str, message : str) -> str:
+    """
+        Create a string used to format the user's message.
+    """
+    start = [ "", dict(text="M", color="red" ) ]
+    end   = [ dict(text=f" <{display_name}> {message}") ]
+
+    options = config.at(['matrix', 'alternative_platforms']) or {}
+
+    for platform, details in options.items():
+        try:
+            regex = details['match']
+            text  = details['text']
+            color = details['color']
+        except KeyError:
+            print("WARNING: Platform `" + platform + "` is missing some configurations.")
+        else:
+            if re.fullmatch(regex, sender):
+                start.append(dict(text=text, color=color))
+    
+    return json.dumps(start + end)
 
 if __name__ == '__main__':
     asyncio.run(start())

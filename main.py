@@ -20,11 +20,6 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
     if int(event.server_timestamp) < STARTUP_TIME:
         return
 
-    # Determine platform
-    platform = 'Matrix'
-    if re.fullmatch(r"@_discord_\d+:t2bot\.io", event.sender):
-        platform = 'Discord'
-
     # Determine how to display username
     name = room.users[event.sender].display_name
     for user in room.users:
@@ -35,11 +30,7 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
             name = room.users[event.sender].disambiguated_name
             break
 
-    mc_wrapper.reply_to_mc(
-        event.body, name,
-        admin=(event.sender in config.MC_ADMINS),
-        platform=platform
-    )
+    mc_wrapper.reply_to_mc(event.body, name, event.sender)
 client.add_event_callback(message_callback, RoomMessageText)
 
 
@@ -47,7 +38,7 @@ async def activate_client() -> None:
     print(await client.login(config.MATRIX_PASSWORD))
 
     await client.room_send(
-        room_id=config.MC_CHANNEL,
+        room_id=config.MATRIX_ROOM,
         message_type="m.room.message",
         content = {
             "msgtype": "m.text",
@@ -60,8 +51,11 @@ async def activate_client() -> None:
 
 async def start():
     await asyncio.gather(
+        # Start the Matrix client
         activate_client(),
-        mc_wrapper.start(client, config.MC_CHANNEL)
+
+        # Start the Minecraft subprocess
+        mc_wrapper.start(client, config.MATRIX_ROOM)
     )
 
 asyncio.run(start())
