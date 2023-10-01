@@ -10,6 +10,9 @@ matrix:
   # Matrix room
   room_id: "!channel_id:example.org"
 
+  # IP address or domain where users can join the server
+  server_address: unknown ip
+
   # List of Matrix users that can send commands to the bridge.
   # When a message starts with a slash, (/) the bridge will interpret it as a
   # Minecraft command and will put that as a command into the console.

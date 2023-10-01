@@ -25,7 +25,7 @@ def rewriter(file_name):
 @rewriter('eula.txt')
 def confirm_eula(line : str, line_no : int, data):
     """Confirm the Minecraft EULA"""
-    if os.getenv('EULA') is None or os.getenv('EULA').lower() != 'true':
+    if not config.EULA:
         return line
     else:
         return line.replace('eula=false', 'eula=true')
@@ -36,9 +36,13 @@ def fill_in_server_settings(line : str, line_no : int, data):
     if line.strip().startswith('#'):
         return line
     
-    value = line.split('=')[0]
+    key = line.split('=')[0]
 
-    if value in config.SERVER_SETTINGS:
-        return value + '=' + str(config.SERVER_SETTINGS[value]) + '\n'
-    else:
+    server_settings = config.at(['minecraft']) or {}
+
+    try:
+        value = server_settings[key]
+    except IndexError:
         return line
+    else:
+        return key + '=' + str(value) + '\n'

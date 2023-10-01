@@ -13,7 +13,7 @@ STARTUP_TIME = time.time()
 client = AsyncClient(config.MATRIX_HOMESERVER, config.MATRIX_USERNAME)
 
 async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
-    if room.machine_name != config.MC_CHANNEL:
+    if room.machine_name != config.MATRIX_ROOM:
         return
     if event.sender == client.user_id:
         return
