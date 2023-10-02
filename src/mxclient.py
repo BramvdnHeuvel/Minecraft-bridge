@@ -16,7 +16,7 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
         return
     if event.sender == client.user_id:
         return
-    if int(event.server_timestamp) < STARTUP_TIME:
+    if int(event.server_timestamp) / 1000 < STARTUP_TIME:
         return
 
     # Determine how to display username
